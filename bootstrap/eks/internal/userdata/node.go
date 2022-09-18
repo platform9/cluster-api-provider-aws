@@ -26,7 +26,23 @@ import (
 
 const (
 	nodeUserData = `#!/bin/bash
-/etc/eks/bootstrap.sh {{.ClusterName}} {{- template "args" . }}
+
+{{ if .APIRetryAttempts }}attempts={{.APIRetryAttempts}}{{ end }}
+
+if [ "${attempts:-0}" == "0" ]; then
+    attempts=3
+fi
+for i in $(seq 1 $attempts); do
+    /etc/eks/bootstrap.sh {{.ClusterName}} {{- template "args" . }}
+    if [ $? -eq 0 ]; then
+        break
+    fi
+    if [ $i -lt $attempts ]; then
+        echo "Attempt# $i failed. Retrying."
+    else
+        echo "Final attempt# $i failed."
+    fi
+done
 `
 )
 
