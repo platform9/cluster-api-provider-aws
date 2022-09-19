@@ -18,7 +18,7 @@ include $(ROOT_DIR_RELATIVE)/versions.mk
 SHELL:=bash
 .ONESHELL:
 .EXPORT_ALL_VARIABLES:
-.SHELLFLAGS := -eu -o pipefail -c
+.SHELLFLAGS := -euc
 .DELETE_ON_ERROR:
 MAKEFLAGS += --no-builtin-rules
 
