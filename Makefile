@@ -93,7 +93,7 @@ BRANCH ?= $(shell git rev-parse --abbrev-ref HEAD)
 TOOLCHAIN_IMAGE := toolchain
 
 TAG ?= dev
-ARCH ?= $(shell go env GOARCH)
+ARCH ?= amd64
 ALL_ARCH ?= amd64 arm arm64 ppc64le s390x
 
 # main controller
