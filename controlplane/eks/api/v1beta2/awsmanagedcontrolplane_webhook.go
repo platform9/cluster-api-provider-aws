@@ -65,11 +65,7 @@ var _ webhook.Defaulter = &AWSManagedControlPlane{}
 var _ webhook.Validator = &AWSManagedControlPlane{}
 
 func parseEKSVersion(raw string) (*version.Version, error) {
-	v, err := version.ParseGeneric(raw)
-	if err != nil {
-		return nil, err
-	}
-	return version.MustParseGeneric(fmt.Sprintf("%d.%d", v.Major(), v.Minor())), nil
+	return version.ParseGeneric(raw)
 }
 
 // ValidateCreate will do any extra validation when creating a AWSManagedControlPlane.
