@@ -2567,6 +2567,10 @@ spec:
                 description: Ready denotes that the AWSManagedControlPlane API Server
                   is ready to receive requests and that the VPC infra is ready.
                 type: boolean
+              version:
+                description: Version represents the current reported Kubernetes version
+                  of the EKS control plane.
+                type: string
             required:
             - ready
             type: object

@@ -33,7 +33,7 @@ const (
 )
 
 // AWSManagedControlPlaneSpec defines the desired state of an Amazon EKS Cluster.
-type AWSManagedControlPlaneSpec struct { //nolint: maligned
+type AWSManagedControlPlaneSpec struct { // nolint: maligned
 	// EKSClusterName allows you to specify the name of the EKS cluster in
 	// AWS. If you don't specify a name then a default name will be created
 	// based on the namespace and name of the managed control plane.
@@ -264,7 +264,7 @@ type AWSManagedControlPlaneStatus struct {
 	// state, and will be set to a descriptive error message.
 	// +optional
 	FailureMessage *string `json:"failureMessage,omitempty"`
-	// Conditions specifies the cpnditions for the managed control plane
+	// Conditions specifies the conditions for the managed control plane
 	Conditions clusterv1.Conditions `json:"conditions,omitempty"`
 	// Addons holds the current status of the EKS addons
 	// +optional
@@ -273,6 +273,10 @@ type AWSManagedControlPlaneStatus struct {
 	// associated identity provider
 	// +optional
 	IdentityProviderStatus IdentityProviderStatus `json:"identityProviderStatus,omitempty"`
+	// Version represents the current reported Kubernetes version of the EKS
+	// control plane.
+	// +optional
+	Version *string `json:"version,omitempty"`
 }
 
 // +kubebuilder:object:root=true

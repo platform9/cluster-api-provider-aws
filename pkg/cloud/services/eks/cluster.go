@@ -230,7 +230,7 @@ func makeEksEncryptionConfigs(encryptionConfig *ekscontrolplanev1.EncryptionConf
 	if encryptionConfig == nil {
 		return cfg
 	}
-	//TODO: change EncryptionConfig so that provider and resources are required  if encruptionConfig is specified
+	// TODO: change EncryptionConfig so that provider and resources are required  if encruptionConfig is specified
 	if encryptionConfig.Provider == nil || len(*encryptionConfig.Provider) == 0 {
 		return cfg
 	}
@@ -412,7 +412,7 @@ func (s *Service) createCluster(eksClusterName string) (*eks.Cluster, error) {
 		conditions.MarkTrue(s.scope.ControlPlane, ekscontrolplanev1.EKSControlPlaneCreatingCondition)
 		record.Eventf(s.scope.ControlPlane, "InitiatedCreateEKSControlPlane", "Initiated creation of a new EKS control plane %s", s.scope.KubernetesClusterName())
 		return true, nil
-	}, awserrors.ResourceNotFound); err != nil { //TODO: change the error that can be retried
+	}, awserrors.ResourceNotFound); err != nil { // TODO: change the error that can be retried
 		record.Warnf(s.scope.ControlPlane, "FailedCreateEKSControlPlane", "Failed to initiate creation of a new EKS control plane: %v", err)
 		return nil, errors.Wrapf(err, "failed to create EKS cluster")
 	}
@@ -568,6 +568,7 @@ func versionToEKS(v *version.Version) string {
 func (s *Service) reconcileClusterVersion(cluster *eks.Cluster) error {
 	specVersion := parseEKSVersion(*s.scope.ControlPlane.Spec.Version)
 	clusterVersion := version.MustParseGeneric(*cluster.Version)
+	s.scope.ControlPlane.Status.Version = cluster.Version
 
 	if clusterVersion.LessThan(specVersion) {
 		// NOTE: you can only upgrade increments of minor versions. If you want to upgrade 1.14 to 1.16 we
