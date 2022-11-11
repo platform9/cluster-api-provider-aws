@@ -19,6 +19,7 @@ package v1beta1
 import (
 	"fmt"
 	"net"
+	"strings"
 
 	"github.com/apparentlymart/go-cidr/cidr"
 	"github.com/pkg/errors"
@@ -71,12 +72,17 @@ func parseEKSVersion(raw string) (*version.Version, error) {
 }
 
 func normalizeVersion(raw string) (string, error) {
-	// Normalize version (i.e. remove patch, add "v" prefix) if necessary
+	// Normalize version (i.e. remove patch) if necessary
 	eksV, err := parseEKSVersion(raw)
 	if err != nil {
 		return "", err
 	}
-	return fmt.Sprintf("v%d.%d", eksV.Major(), eksV.Minor()), nil
+	// Re-add the "v" prefix if it was present in the raw version
+	v := fmt.Sprintf("%d.%d", eksV.Major(), eksV.Minor())
+	if strings.HasPrefix(raw, "v") {
+		v = fmt.Sprintf("v%s", v)
+	}
+	return v, nil
 }
 
 // ValidateCreate will do any extra validation when creating a AWSManagedControlPlane.
