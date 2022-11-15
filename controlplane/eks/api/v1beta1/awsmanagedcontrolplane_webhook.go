@@ -79,7 +79,7 @@ func normalizeVersion(raw string) (string, error) {
 	}
 	// Re-add the "v" prefix if it was present in the raw version
 	v := fmt.Sprintf("%d.%d", eksV.Major(), eksV.Minor())
-	if !strings.HasPrefix(raw, "v") {
+	if strings.HasPrefix(raw, "v") {
 		v = fmt.Sprintf("v%s", v)
 	}
 	return v, nil
